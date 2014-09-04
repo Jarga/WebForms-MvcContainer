@@ -9,6 +9,11 @@ Suggested Usage:
 	
 		protected Lazy<MvcContainer> _mvc = new Lazy<MvcContainer>(() => new MvcContainer(HttpContext.Current));
 		
+		public MvcContainer Mvc
+        {
+            get { return _mvc.Value; }
+        }
+		
 		public override void Dispose()
 		{
 			base.Dispose();
