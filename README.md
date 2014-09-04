@@ -1,7 +1,7 @@
 MVC Container for Web Forms
 =================
 
-Container to allow Web Form pages to act like MVC Controllers and call into Controllers via route names
+Container to allow Web Forms pages to act like MVC Controllers and call into Controllers via route names
 
 Suggested Usage:
 
