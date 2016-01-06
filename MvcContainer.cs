@@ -16,20 +16,23 @@ namespace MarketOnce.Web.Common
         public UrlHelper Url { get; private set; }
         public dynamic ViewBag { get; private set; }
 
-        public MvcContainer(HttpContext context)
+        [Obsolete("Please use an HttpContextWrapper or HttpContextBase to construct the MvcContainer")]
+        public MvcContainer(HttpContext context) : this(new HttpContextWrapper(context))  { }
+
+        
+        public MvcContainer(HttpContextBase context)
         {
             this._controller = new WebFormsController();
             this._viewPage = new ViewPage();
             InitializeHtmlHelper(context);
         }
 
-        private void InitializeHtmlHelper(HttpContext context)
+        private void InitializeHtmlHelper(HttpContextBase context)
         {
-            var httpContext = new HttpContextWrapper(context);
-            var controllerContext = new ControllerContext(httpContext, new RouteData(), _controller);
+            var controllerContext = new ControllerContext(context, new RouteData(), _controller);
             var viewContext = new ViewContext(controllerContext, new WebFormView(controllerContext, "Views"), new ViewDataDictionary(), new TempDataDictionary(), TextWriter.Null);
             Html = new HtmlHelper(viewContext, _viewPage);
-            Url = new UrlHelper(new RequestContext(httpContext, RouteTable.Routes.GetRouteData(httpContext) ?? new RouteData()));
+            Url = new UrlHelper(new RequestContext(context, RouteTable.Routes.GetRouteData(context) ?? new RouteData()));
             ViewBag = viewContext.ViewBag;
         }
 
