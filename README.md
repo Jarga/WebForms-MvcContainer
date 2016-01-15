@@ -7,7 +7,7 @@ Suggested Usage:
 
 	In Base Page:
 	
-		protected Lazy<MvcContainer> _mvc = new Lazy<MvcContainer>(() => new MvcContainer(HttpContext.Current));
+		protected Lazy<MvcContainer> _mvc = new Lazy<MvcContainer>(() => new MvcContainer(new HttpContextWrapper(HttpContext.Current)));
 		
 		public MvcContainer Mvc
         {
